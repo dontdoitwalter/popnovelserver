@@ -5,7 +5,7 @@ const validateSesh = require('../middleware/validatesession')
 let UserStory = sequelize.import('../models/story');
 
 router.post('/story', validateSesh, function(req, res){
-    let Story = req.body.user.story;
+    let Story = req.body.storysubmit.story;
 
     UserStory.create({
         story:Story
