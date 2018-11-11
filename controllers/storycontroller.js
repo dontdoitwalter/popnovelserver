@@ -1,9 +1,10 @@
 let express = require('express');
 let router = express.Router();
 let sequelize = require('../db');
+const validateSesh = require('../middleware/validatesession')
 let UserStory = sequelize.import('../models/story');
 
-router.post('/story', function(req, res){
+router.post('/story', validateSesh, function(req, res){
     let Story = req.body.user.story;
 
     UserStory.create({
