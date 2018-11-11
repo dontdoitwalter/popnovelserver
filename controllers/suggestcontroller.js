@@ -5,7 +5,7 @@ const validateSesh = require('../middleware/validatesession')
 let UserSuggestion = sequelize.import('../models/suggest');
 
 router.post('/suggest', validateSesh, function(req, res){
-    let Suggestion = req.body.user.suggest;
+    let Suggestion = req.body.submission.suggest;
 
     UserSuggestion.create({
         suggest:Suggestion
