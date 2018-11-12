@@ -65,7 +65,7 @@ router.post('/login', function(req, res){
 router.get('/info', validateSesh, function(req, res){
     let userid = req.user.id;
     User.findAll({
-        where:{owner:userid}
+        where:{user:userid}
     }).then(
         function findAllSuccess(data){
             res.json(data);
