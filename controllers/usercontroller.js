@@ -61,6 +61,20 @@ router.post('/login', function(req, res){
                 res.status(501).send({error:"Failed again"});
             });
 });
+/*ALL PROFILE INFO FOR USER*/
+router.get('/info', validateSesh, function(req, res){
+    let userid = req.user.id;
+    User.findAll({
+        where:{owner:userid}
+    }).then(
+        function findAllSuccess(data){
+            res.json(data);
+        },
+        function findAllError(err){
+            res.send(500, err.message)
+        }
+    )
+});
 /*DELETE ACCOUNT*/
 router.delete('/delete', validateSesh,function(req, res){
     let userid = req.user.id;
