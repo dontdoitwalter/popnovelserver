@@ -63,7 +63,7 @@ router.post('/login', function(req, res){
 });
 /*ALL PROFILE INFO FOR USER*/
 router.get('/info/:id', validateSesh, function(req, res){
-    let userid = req.id;
+    let userid = req.user.id;
     User.findAll({
         where:{id:userid}
     }).then(
