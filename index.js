@@ -5,7 +5,6 @@ let test = require('./controllers/testcontrollers');
 let sequelize = require('./db');
 let bodyParser = require('body-parser');
 let user = require('./controllers/usercontroller');
-let suggest = require('./controllers/suggestcontroller')
 let story = require('./controllers/storycontroller');
 /*MAKING SURE ITS WORKING*/
 sequelize.sync();
@@ -21,9 +20,7 @@ app.use('/api/test', function(req, res){
 app.use('/test', test)
 /*EXPOSED ROUTES*/
 app.use('/user', user)
-app.use('/user', user)
 /*VALIDATE SESSION*/
 app.use(require('./middleware/validatesession'))
 /*AUTHORIZED ROUTES*/
-app.use('/authuser', suggest)
 app.use('/authuser', story)

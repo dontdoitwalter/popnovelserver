@@ -2,9 +2,11 @@ let express = require('express');
 let router = express.Router();
 let sequelize = require('../db');
 let User = sequelize.import('../models/user');
+let Suggest = sequelize.import('../models/suggest')
 let bcrypt = require ('bcryptjs');
 let jwt = require('jsonwebtoken');
 const validateSesh = require('../middleware/validatesession')
+
 /*CREATE NEW ACCOUNT*/
 router.post('/signup', function(req, res){
     let DisplayName = req.body.user.displayname;
@@ -64,11 +66,11 @@ router.post('/login', function(req, res){
 /*ALL PROFILE INFO FOR USER*/
 router.get('/info/:id', validateSesh, function(req, res){
     let userid = req.user.id;
-    User.findAll({
+    User.findOne({
         where:{id:userid}
     }).then(
         function findAllSuccess(data){
-            res.json(data);
+            res.json({ user: data });
         },
         function findAllError(err){
             res.send(500, err.message)
@@ -113,4 +115,20 @@ router.put('/update/:id', validateSesh, function(req, res){
             res.send(500, res.send)
         })
 });
+router.post('/suggest', validateSesh, function(req, res){
+    let Suggestion = req.body.submission.suggest;
+
+    Suggest.create({
+        suggest:Suggestion
+    }).then(
+        function suggestSuccess(user){
+            res.json({
+                message:'Thank you for your suggestion!'
+            })
+        }
+    )
+    function createError(err){
+        res.send(500, err.message)
+    }
+})
 module.exports = router;

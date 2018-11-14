@@ -4,7 +4,7 @@ module.exports = function(sequelize, DataTypes){
             type:DataTypes.STRING,
             allowNull:false,
             validate:{
-                min:[5],
+                min:[3],
                 max:[30]
             },
             unique:true,
