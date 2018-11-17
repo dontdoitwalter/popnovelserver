@@ -9,16 +9,12 @@ let user = require('./controllers/usercontroller');
 sequelize.sync();
 app.use(require('./middleware/headers'));
 app.use(bodyParser.json());
-app.listen(process.env.PORT, () => {
-    console.log(`server is listening on port ${process.env.PORT}`)
-})
+app.listen(process.env.PORT,()=>{console.log(`server is listening on port ${process.env.PORT}`)})
 /*TEST ROUTES*/
-app.use('/api/test', function(req, res){
-    res.send("This is data from the /api/test endpoint. It's from the server.")
-})
-app.use('/test', test)
+app.use('/api/test',function(req, res){res.send("This is data from the /api/test endpoint. It's from the server.")})
+app.use('/test',test)
 /*EXPOSED ROUTES*/
-app.use('/user', user)
+app.use('/user',user)
 /*VALIDATE SESSION*/
 app.use(require('./middleware/validatesession'))
 /*AUTHORIZED ROUTES*/
