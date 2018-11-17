@@ -6,7 +6,7 @@ let sequelize = require('./db');
 let bodyParser = require('body-parser');
 let user = require('./controllers/usercontroller');
 /*MAKING SURE ITS WORKING*/
-sequelize.sync({force:true});
+sequelize.sync();
 app.use(require('./middleware/headers'));
 app.use(bodyParser.json());
 app.listen(process.env.PORT, () => {
