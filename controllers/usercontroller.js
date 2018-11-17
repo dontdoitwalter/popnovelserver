@@ -2,10 +2,11 @@ let express = require('express');
 let router = express.Router();
 let sequelize = require('../db');
 let User = sequelize.import('../models/user');
-let Suggest = sequelize.import('../models/suggest')
+let Suggest = sequelize.import('../models/suggest');
+let UserStory = sequelize.import('../models/story')
 let bcrypt = require ('bcryptjs');
 let jwt = require('jsonwebtoken');
-const validateSesh = require('../middleware/validatesession')
+const validateSesh = require('../middleware/validatesession');
 
 /*CREATE NEW ACCOUNT*/
 router.post('/signup', function(req, res){
@@ -78,7 +79,7 @@ router.get('/info/:id', validateSesh, function(req, res){
     )
 });
 /*DELETE ACCOUNT*/
-router.delete('/delete', validateSesh,function(req, res){
+router.delete('/delete/:id', validateSesh,function(req, res){
     let userid = req.user.id;
     User.destroy({
         where:{id:userid}
@@ -115,6 +116,7 @@ router.put('/update/:id', validateSesh, function(req, res){
             res.send(500, res.send)
         })
 });
+/*POST A SUGGESTION*/
 router.post('/suggest', validateSesh, function(req, res){
     let Suggestion = req.body.submission.suggest;
 
@@ -124,6 +126,34 @@ router.post('/suggest', validateSesh, function(req, res){
         function suggestSuccess(user){
             res.json({
                 message:'Thank you for your suggestion!'
+            })
+        }
+    )
+    function createError(err){
+        res.send(500, err.message)
+    }
+})
+/*GET ALL STORY SUBMITS*/
+router.get('/read', function(req, res){
+    UserStory.findAll().then(
+        function getSuccess(data){
+            console.log(data)
+        },
+        function getError(err){
+            res.send(500,err.message)
+        }
+    )
+})
+/*POST A STORY SUBMIT*/
+router.post('/story', validateSesh, function(req, res){
+    let Story = req.body.storysubmit.story;
+    UserStory.create({
+        story:Story
+    }).then(
+        function storySuccess(user){
+            res.json({
+                message:'Thank you for your submission',
+                data:user,
             })
         }
     )
