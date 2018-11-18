@@ -137,7 +137,10 @@ router.post('/suggest', validateSesh, function(req, res){
 router.get('/read', function(req, res){
     UserStory.findAll().then(
         function getSuccess(data){
-            console.log(data)
+            res.json({
+                story:data,
+                message:'here are the stories'
+            })
         },
         function getError(err){
             res.send(500,err.message)

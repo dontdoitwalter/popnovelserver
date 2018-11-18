@@ -6,7 +6,7 @@ let sequelize = require('./db');
 let bodyParser = require('body-parser');
 let user = require('./controllers/usercontroller');
 /*MAKING SURE ITS WORKING*/
-sequelize.sync();
+sequelize.sync({force:true});
 app.use(require('./middleware/headers'));
 app.use(bodyParser.json());
 app.listen(process.env.PORT,()=>{console.log(`server is listening on port ${process.env.PORT}`)})
